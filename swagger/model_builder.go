@@ -201,7 +201,9 @@ func (b modelBuilder) buildStructTypeProperty(field reflect.StructField, jsonNam
 		// add all referenced model
 		for key, sub := range sub.Models {
 			if key != subKey {
-				b.Models[key] = sub
+				if _, existed := b.Models[key]; !existed {
+					b.Models[key] = sub
+				}
 			}
 		}
 		// empty name signals skip property
